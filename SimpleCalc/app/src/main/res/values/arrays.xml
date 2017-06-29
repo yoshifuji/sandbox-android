@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="operators">
+        <item>@string/oprt_plus</item>
+        <item>@string/oprt_minus</item>
+        <item>@string/oprt_multiply</item>
+        <item>@string/oprt_division</item>
+    </string-array>
+</resources>
