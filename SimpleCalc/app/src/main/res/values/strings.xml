@@ -3,6 +3,7 @@
     <string name="hint_input_number">Input number</string>
     <string name="hint_result_number">Value</string>
     <string name="label_result">Result</string>
+    <string name="label_result_number">Value</string>
     <string name="btn_calc">Calc</string>
     <string name="btn_recalculate">ReCalc</string>
     <string name="btn_back">Back</string>

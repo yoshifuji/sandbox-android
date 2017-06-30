@@ -17,10 +17,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="29dp"
             android:layout_marginStart="29dp"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="55dp"
             android:ems="10"
             android:hint="@string/hint_input_number"
             android:inputType="numberDecimal"
+            android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,6 +35,7 @@
             android:ems="10"
             android:hint="@string/hint_input_number"
             android:inputType="numberDecimal"
+            android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,10 +54,11 @@
             android:id="@+id/textResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="29dp"
+            android:layout_marginLeft="37dp"
             android:layout_marginStart="37dp"
-            android:layout_marginTop="344dp"
+            android:layout_marginTop="359dp"
             android:text="@string/label_result"
+            android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,8 +68,10 @@
             android:layout_height="43dp"
             android:layout_marginLeft="29dp"
             android:layout_marginStart="37dp"
-            android:layout_marginTop="390dp"
+            android:layout_marginTop="409dp"
             android:hint="@string/hint_result_number"
+            android:text="@string/label_result_number"
+            android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,6 +83,7 @@
             android:layout_marginStart="270dp"
             android:layout_marginTop="228dp"
             android:text="@string/btn_calc"
+            android:textSize="24sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/numberInput2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -88,9 +94,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="270dp"
             android:layout_marginStart="270dp"
-            android:layout_marginTop="378dp"
-            android:text="@string/btn_recalculate"
+            android:layout_marginTop="409dp"
             android:background="@drawable/button_background_ripple"
+            android:text="@string/btn_recalculate"
+            android:textSize="24sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/textResultNumber"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
