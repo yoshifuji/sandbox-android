@@ -1,5 +1,6 @@
 package com.example.sample.simplecalc;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, View
     private EditText numberInput2;
     private Spinner operatorSelector;
     private TextView calcResult;
+
+    private static final int REQUEST_CODE_ANOTHER_CALC_1 = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +52,12 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, View
 
     }
 
-    private void refreshResult(){
-        if (checkEditTextInput()){
-            String result = String.valueOf(calc());
-            calcResult.setText(result);
-        } else {
-            calcResult.setText(R.string.label_result_number);
-        }
-    }
-
     private boolean checkEditTextInput(){
         String input1 = numberInput1.getText().toString();
         String input2 = numberInput2.getText().toString();
         return !TextUtils.isEmpty(input1) && !TextUtils.isEmpty(input2);
     }
+
     private int calc(){
         String input1 = numberInput1.getText().toString();
         String input2 = numberInput2.getText().toString();
@@ -89,9 +84,44 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, View
         int id = v.getId();
 
         switch (id){
-            case R.id.precalcButton: refreshResult(); break;
-            case R.id.calcButton: refreshResult(); break;
-            case R.id.recalcButton: refreshResult(); break;
+            case R.id.precalcButton:
+                Intent intent1 = new Intent(this, AnotherCalcActivity.class);
+                startActivityForResult(intent1, REQUEST_CODE_ANOTHER_CALC_1);
+                break;
+            case R.id.calcButton:
+                if(checkEditTextInput()){
+                    int result = calc();
+                    calcResult.setText(String.valueOf(result));
+                }
+                break;
+            case R.id.recalcButton:
+                if(checkEditTextInput()){
+                    int result = calc();
+                    numberInput1.setText(String.valueOf(result));
+                    result = calc();//recalc
+                    calcResult.setText(String.valueOf(result));
+                }
+                break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode, data);
+
+        //Back Button action
+        if (resultCode != RESULT_OK) return;
+
+        //Retrieve data set
+        Bundle resultBundle = data.getExtras();
+        if (!resultBundle.containsKey("result")) return;
+
+        //Retrieve data by key
+        int result = resultBundle.getInt("result");
+
+        if (requestCode == REQUEST_CODE_ANOTHER_CALC_1){
+            numberInput1.setText(String.valueOf(result));
+        }
+    }
+
 }

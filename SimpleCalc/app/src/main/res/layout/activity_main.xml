@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="37dp"
             android:layout_marginStart="37dp"
-            android:layout_marginTop="359dp"
+            android:layout_marginTop="362dp"
             android:text="@string/label_result"
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="270dp"
             android:layout_marginStart="270dp"
-            android:text="@string/btn_calc"
+            android:text="@string/btn_precalc"
             android:textSize="24sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/numberInput1"
             app:layout_constraintLeft_toLeftOf="parent" />
