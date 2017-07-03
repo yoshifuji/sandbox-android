@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">簡単計算機</string>
+    <string name="title_another_calc">AnotherCalc</string>
+    <string name="hint_input_number">数字を入力してください</string>
+    <string name="hint_result_number">値</string>
+    <string name="label_result">計算結果</string>
+    <string name="label_result_number">値</string>
+    <string name="btn_precalc">事前計算</string>
+    <string name="btn_calc">計算</string>
+    <string name="btn_recalculate">再計算</string>
+    <string name="btn_back">戻る</string>
+    <string name="oprt_plus">＋</string>
+    <string name="oprt_minus">－</string>
+    <string name="oprt_multiply">×</string>
+    <string name="oprt_division">÷</string>
+</resources>
