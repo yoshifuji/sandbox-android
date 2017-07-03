@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, View
         operatorSelector = (Spinner)findViewById(R.id.operatorSelector);
         calcResult = (TextView)findViewById(R.id.textResultNumber);
 
+        findViewById(R.id.precalcButton).setOnClickListener(this);
         findViewById(R.id.calcButton).setOnClickListener(this);
         findViewById(R.id.recalcButton).setOnClickListener(this);
     }
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, View
         int id = v.getId();
 
         switch (id){
+            case R.id.precalcButton: refreshResult(); break;
             case R.id.calcButton: refreshResult(); break;
             case R.id.recalcButton: refreshResult(); break;
         }
