@@ -3,10 +3,11 @@ package com.example.sample.simplecalc;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import utils.Util;
 
 public class AnotherCalcActivity extends AppCompatActivity  implements View.OnClickListener {
 
@@ -29,10 +30,12 @@ public class AnotherCalcActivity extends AppCompatActivity  implements View.OnCl
 
     @Override
     public void onClick(View v){
-        if (!checkEditTextInput()){
+        Util ut = new Util();
+
+        if(!ut.checkEditTextInput(numberInput1, numberInput2)){
             setResult(RESULT_CANCELED);
         } else {
-            int result = calc();
+            int result = ut.calc(numberInput1, numberInput2, operatorSelector);
 
             Intent data = new Intent();
             data.putExtra("result", result);
@@ -40,32 +43,5 @@ public class AnotherCalcActivity extends AppCompatActivity  implements View.OnCl
         }
 
         finish();
-    }
-
-    private boolean checkEditTextInput(){
-        String input1 = numberInput1.getText().toString();
-        String input2 = numberInput2.getText().toString();
-        return !TextUtils.isEmpty(input1) && !TextUtils.isEmpty(input2);
-    }
-
-    private int calc(){
-        String input1 = numberInput1.getText().toString();
-        String input2 = numberInput2.getText().toString();
-
-        int num1 = Integer.parseInt(input1);
-        int num2 = Integer.parseInt(input2);
-        int oprt = operatorSelector.getSelectedItemPosition();
-        int result;
-
-        switch (oprt){
-            case 0: result = num1 + num2; break;
-            case 1: result = num1 - num2; break;
-            case 2: result = num1 * num2; break;
-            case 3: result = num1 / num2; break;
-            default:
-                throw new RuntimeException();
-        }
-
-        return result;
     }
 }
