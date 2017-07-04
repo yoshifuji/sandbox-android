@@ -20,6 +20,10 @@ public class MemoEditText extends android.support.v7.widget.AppCompatEditText {
     private static final int NORMAL = 4; //thick
     private static final int BOLD   = 8; //bold
 
+    private int mMeasureWidth;
+    private int mLineHeight;
+    private int mDisplayLineCount;
+
     private Path mPath;
     private Paint mPaint;
 
