@@ -65,5 +65,5 @@ public class AssertUnitTest {
     }
     private static class Hoge {}
     private static class Fuga extends Hoge {}
-    
+
 }

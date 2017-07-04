@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_rule_interval_on" />
+    <dimen name="text_rule_interval_off" />
+    <dimen name="text_width_bold" />
+    <dimen name="text_width_normal" />
+</resources>
