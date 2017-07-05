@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_rule_interval_on">14sp</dimen>
-    <dimen name="text_rule_interval_off">14sp</dimen>
-    <dimen name="text_width_bold">14sp</dimen>
-    <dimen name="text_width_normal">14sp</dimen>
+    <dimen name="text_rule_interval_on">24sp</dimen>
+    <dimen name="text_rule_interval_off">24sp</dimen>
+    <dimen name="text_width_bold">24sp</dimen>
+    <dimen name="text_width_normal">24sp</dimen>
+    <dimen name="settings_text_size_large">14sp</dimen>
+    <dimen name="settings_text_size_medium">24sp</dimen>
+    <dimen name="settings_text_size_small">36sp</dimen>
 </resources>

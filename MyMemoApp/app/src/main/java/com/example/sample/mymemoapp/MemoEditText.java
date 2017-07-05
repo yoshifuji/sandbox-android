@@ -113,8 +113,4 @@ public class MemoEditText extends EditText {
         canvas.drawPath(mPath, mPaint);
         super.onDraw(canvas);
     }
-
-
-
-
 }

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MyMemoApp</string>
+    <string name="permission.memo.read">com.example.sample.mymemoapp.memo.read</string>
+    <string name="permission.memo.read.label">メモ情報の読み取り</string>
+    <string name="permission.memo.read.description">作成したメモ情報を読み取ります</string>
+    <string name="permission.memo.write">com.example.sample.mymemoapp.memo.write</string>
+    <string name="permission.memo.write.label">メモ情報の編集</string>
+    <string name="permission.memo.write.description">作成したメモ情報を編集します</string>
 </resources>

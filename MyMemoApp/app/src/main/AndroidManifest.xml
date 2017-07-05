@@ -2,6 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sample.mymemoapp">
 
+    <!-- permission for external storage -->
+    <user-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- declaration of reading app provider -->
+    <permission
+        android:name="com.example.sample.mymemoapp.memo.read"
+        android:protectionLevel="normal"
+        android:label="@string/permission.memo.read.label"
+        android:description="@string/permission.memo.read.description"/>
+    <!-- declaration of writing app provider -->
+    <permission
+        android:name="com.example.sample.mymemoapp.memo.write"
+        android:protectionLevel="normal"
+        android:label="@string/permission.memo.write.label"
+        android:description="@string/permission.memo.write.description"/>
+    <!-- declaration of user permission -->
+    <uses-permission android:name="com.example.sample.mymemoapp.memo.read"/>
+    <uses-permission android:name="com.example.sample.mymemoapp.memo.write"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,6 +35,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <!-- Provider of memo management -->
+        <provider
+            android:authorities = "com.example.sample.mymemoapp.memo"
+            android:name=".MemoProvider"
+            android:writePermission="com.example.sample.mymemoapp.memo.write"
+            android:readPermission="com.example.sample.mymemoapp.memo.read"
+            android:exported="true" />
+
+    </application>
 </manifest>
