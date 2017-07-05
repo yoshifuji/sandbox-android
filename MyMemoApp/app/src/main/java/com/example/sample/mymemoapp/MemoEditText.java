@@ -1,5 +1,6 @@
 package com.example.sample.mymemoapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -9,11 +10,13 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.widget.EditText;
 
 /**
  * Created by yoshitaka.fujisawa on 2017/07/04.
  */
-public class MemoEditText extends android.support.v7.widget.AppCompatEditText {
+@SuppressLint("AppCompatCustomView")
+public class MemoEditText extends EditText {
 
     private static final int SOLID  = 1; //straight
     private static final int DASH   = 2; //dotted
