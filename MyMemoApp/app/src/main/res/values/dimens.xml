@@ -7,4 +7,6 @@
     <dimen name="settings_text_size_large">14sp</dimen>
     <dimen name="settings_text_size_medium">24sp</dimen>
     <dimen name="settings_text_size_small">36sp</dimen>
+    <dimen name="settings_text_size_default">24sp</dimen>
+    <dimen name="activity_horizontal_margin">4dp</dimen>
 </resources>

@@ -28,8 +28,6 @@ public class MemoRepository {
     private MemoRepository() {
     }
 
-    ;
-
     //save as file to database
     public static Uri store(Context context, String memo) {
         File outputDir;
@@ -187,8 +185,8 @@ public class MemoRepository {
 
         return true;
     }
-    
-    private static Uri create(Context context, String memo) {
+
+    public static Uri create(Context context, String memo) {
         File outputDir = getOutputDir(context);
         if (outputDir == null) return null;
 
@@ -206,7 +204,7 @@ public class MemoRepository {
         return context.getContentResolver().insert(MemoProvider.CONTENT_URI, values);
     }
 
-    private static int update(Context context, Uri uri, String memo) {
+    public static int update(Context context, Uri uri, String memo) {
         String id = uri.getLastPathSegment();
 
         Cursor cursor = context.getContentResolver().query(uri,

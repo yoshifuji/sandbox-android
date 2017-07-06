@@ -6,4 +6,33 @@
     <string name="permission.memo.write">com.example.sample.mymemoapp.memo.write</string>
     <string name="permission.memo.write.label">メモ情報の編集</string>
     <string name="permission.memo.write.description">作成したメモ情報を編集します</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="memo.hint">hoge</string>
+    <string name="error_memo_file_not_found">hoge</string>
+    <string name="error_memo_file_load_failed">fuga</string>
+
+    <string name="settings_screen">画面の反転</string>
+    <string name="settings_screen_color_reverse">色の反転</string>
+    <string name="key_screen_reverse">screen.reverse</string>
+    <string name="settings_file">ファイルの設定</string>
+    <string name="settings_file_name_prefix">プレフィックス</string>
+    <string name="key_file_name_prefix">file.name.prefix</string>
+    <string name="settings_file_name_prefix_default">memo</string>
+    <string name="settings_file_name_prefix_dialog_title">ファイル名のプレフィックス</string>
+    <string name="settings_file_name_prefix_dialog_message">ファイル名のプレフィックスを入力</string>
+    <string name="settings_text">文字の設定</string>
+    <string name="settings_text_size">フォントサイズ</string>
+    <string name="key_text_size">text.size</string>
+    <string name="settings_text_size_dialog_title">フォントサイズの選択</string>
+    <string name="setting_text_size_large">大</string>
+    <string name="setting_text_size_medium">中</string>
+    <string name="setting_text_size_small">小</string>
+    <string name="settings_text_style">装飾</string>
+    <string name="key_text_style">text.style</string>
+    <string name="settings_text_style_dialog_title">文字装飾の選択</string>
+    <string name="settings_text_style_italic">イタリック</string>
+    <string name="settings_text_style_bold">太字</string>
+
 </resources>

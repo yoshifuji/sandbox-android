@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:memo="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.sample.mymemoapp.MemoEditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        memo:lineEffect=""
+        memo:lineColor=""
+        android:id="@+id/Memo"
+        android:singleLine="false"
+        android:gravity="start|top"
+        android:hint="@string/memo.hint"
+        android:textSize="@dimen/settings_text_size_default"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:background="@android:color/transparent"
+        />
+
+</LinearLayout>

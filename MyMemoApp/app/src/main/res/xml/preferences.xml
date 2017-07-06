@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/settings_screen">
+        <!-- reverse color -->
+        <SwitchPreference
+            android:title="@string/settings_screen_color_reverse"
+            android:key="@string/key_screen_reverse"
+            android:defaultValue="false"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_file">
+        <!-- prefix of file -->
+        <EditTextPreference
+            android:title=""
+            android:key=""
+            android:defaultValue=""
+            android:dialogTitle=""
+            android:dialogMessage=""
+            android:maxLength="" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_text_size">
+        <!-- character size -->
+        <ListPreference
+            android:title=""
+            android:key=""
+            android:entries=""
+            android:entryValues=""
+            android:dialogTitle="" />
+
+        <!-- character typeface -->
+        <MultiSelectListPreference
+            android:title=""
+            android:key=""
+            android:entries=""
+            android:entryValues=""
+            android:dialogTitle="" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
