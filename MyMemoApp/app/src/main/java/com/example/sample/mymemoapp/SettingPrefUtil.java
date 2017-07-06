@@ -26,15 +26,15 @@ public class SettingPrefUtil {
     private static final String KEY_SCREEN_REVERSE = "screen.reverse";
 
     public static String getFileNamePrefix(Context context){
-        //Retreive SharedPreference
+        //Retrieve SharedPreference
         SharedPreferences sp = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         //Retrieve SharedPreference Settings
         return sp.getString(KEY_FILE_NAME_PREFIX, KEY_FILE_NAME_PREFIX_DEFAULT);
     }
 
-    //retreive font size
+    //Retrieve font size
     public static float getFontSize(Context context){
-        //Retreive SharedPreference
+        //Retrieve SharedPreference
         SharedPreferences sp = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         //current setting
         String storedSize = sp.getString(KEY_TEXT_SIZE, TEXT_SIZE_MEDIUM);
@@ -51,9 +51,9 @@ public class SettingPrefUtil {
         }
     }
 
-    //retreive layout settings
+    //Retrieve layout settings
     public static int getTypeface(Context context){
-        //Retreive SharedPreference
+        //Retrieve SharedPreference
         SharedPreferences sp = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         Set<String> storedTypeface = sp.getStringSet(KEY_TEXT_STYLE, Collections.<String>emptySet());
 
