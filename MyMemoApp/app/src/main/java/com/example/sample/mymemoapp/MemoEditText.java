@@ -18,10 +18,10 @@ import android.widget.EditText;
 @SuppressLint("AppCompatCustomView")
 public class MemoEditText extends EditText {
 
-    private static final int SOLID  = 1; //straight
-    private static final int DASH   = 2; //dotted
+    private static final int SOLID = 1; //straight
+    private static final int DASH = 2; //dotted
     private static final int NORMAL = 4; //thick
-    private static final int BOLD   = 8; //bold
+    private static final int BOLD = 8; //bold
 
     private int mMeasureWidth;
     private int mLineHeight;
@@ -71,7 +71,7 @@ public class MemoEditText extends EditText {
             }
 
             float strokeWidth;
-            if ((lineEffectBit & BOLD) == BOLD){
+            if ((lineEffectBit & BOLD) == BOLD) {
                 strokeWidth = resources.getDimension(
                         R.dimen.text_width_bold
                 );
@@ -86,7 +86,7 @@ public class MemoEditText extends EditText {
     }
 
     @Override
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         mMeasureWidth = getMeasuredWidth();
@@ -97,14 +97,14 @@ public class MemoEditText extends EditText {
     }
 
     @Override
-    public void onDraw(Canvas canvas){
+    public void onDraw(Canvas canvas) {
         int paddingTop = getExtendedPaddingTop();
         int scrollY = getScrollY();
         int firstVisibleLine = getLayout().getLineForVertical(scrollY);
         int lastVisibleLine = firstVisibleLine + mDisplayLineCount;
         mPath.reset();
 
-        for(int i = firstVisibleLine; i <= lastVisibleLine; i++){
+        for (int i = firstVisibleLine; i <= lastVisibleLine; i++) {
             mPath.moveTo(0, i + mLineHeight + paddingTop); //move cursor to left end
             mPath.lineTo(mMeasureWidth, i * mLineHeight + paddingTop); //draw line to right side
         }
