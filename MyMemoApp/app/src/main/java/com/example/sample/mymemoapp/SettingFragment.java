@@ -61,9 +61,11 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         }
 
         if (activity.getString(R.string.key_text_style).equals(key)) {
-            setTypefaceSummary(sharedPreferences);
+            //setTypefaceSummary(sharedPreferences); //TODO: Check it later
+            setTypefaceSummary(prefs);
         } else if (activity.getString(R.string.key_file_name_prefix).equals(key)) {
-            setPrefixSummary(sharedPreferences);
+            //setPrefixSummary(sharedPreferences); //TODO: Check it later
+            setPrefixSummary(prefs);
         }
     }
 
