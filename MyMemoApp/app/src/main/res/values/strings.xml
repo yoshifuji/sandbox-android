@@ -34,5 +34,6 @@
     <string name="settings_text_style_dialog_title">文字装飾の選択</string>
     <string name="settings_text_style_italic">イタリック</string>
     <string name="settings_text_style_bold">太字</string>
+    <string name="memo_create">新規作成する</string>
 
 </resources>

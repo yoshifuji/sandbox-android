@@ -12,30 +12,30 @@
     <PreferenceCategory android:title="@string/settings_file">
         <!-- prefix of file -->
         <EditTextPreference
-            android:title=""
-            android:key=""
-            android:defaultValue=""
-            android:dialogTitle=""
-            android:dialogMessage=""
-            android:maxLength="" />
+            android:title="@string/settings_file_name_prefix"
+            android:key="@string/key_file_name_prefix"
+            android:defaultValue="@string/settings_file_name_prefix_default"
+            android:dialogTitle="@string/settings_file_name_prefix_dialog_title"
+            android:dialogMessage="@string/settings_file_name_prefix_dialog_message"
+            android:maxLength="@integer/file_name_prefix_length_max" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_text_size">
+    <PreferenceCategory android:title="@string/settings_text">
         <!-- character size -->
         <ListPreference
-            android:title=""
-            android:key=""
-            android:entries=""
-            android:entryValues=""
-            android:dialogTitle="" />
+            android:title="@string/settings_text_size"
+            android:key="@string/key_text_size"
+            android:entries="@array/text_size_labels"
+            android:entryValues="@array/text_size_values"
+            android:dialogTitle="@string/settings_text_size_dialog_title" />
 
         <!-- character typeface -->
         <MultiSelectListPreference
-            android:title=""
-            android:key=""
-            android:entries=""
-            android:entryValues=""
-            android:dialogTitle="" />
+            android:title="@string/settings_text_style"
+            android:key="@string/key_text_style"
+            android:entries="@array/text_style_labels"
+            android:entryValues="@array/text_style_values"
+            android:dialogTitle="@string/settings_text_style_dialog_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

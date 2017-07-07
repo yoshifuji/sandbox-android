@@ -9,4 +9,5 @@
     <dimen name="settings_text_size_small">36sp</dimen>
     <dimen name="settings_text_size_default">24sp</dimen>
     <dimen name="activity_horizontal_margin">4dp</dimen>
+    <dimen name="list_item_padding">16dp</dimen>
 </resources>
