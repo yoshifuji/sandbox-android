@@ -25,7 +25,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getPreferenceManager().setSharedPreferencesName(SettingRepository.PREF_FILE_NAME);
+        //getPreferenceManager().setSharedPreferencesName(SettingRepository.PREF_FILE_NAME); //TODO: Check here later
+        getPreferenceManager().setSharedPreferencesName(SettingPrefUtil.PREF_FILE_NAME);
         addPreferencesFromResource(R.xml.preferences);
     }
 

@@ -39,7 +39,7 @@ public class MemoLoadFragment extends ListFragment {
 
         Cursor cursor = MemoRepository.query(getActivity());
 
-        MemoAdapter adapter = new MemoAdapter(getActivity(), cursor); //TODO: Check here is correct
+        MemoAdapter adapter = new MemoAdapter(getActivity(), cursor); //TODO: Check here later
         setListAdapter(adapter);
     }
 

@@ -34,7 +34,7 @@ public class MemoAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View view = mInflater.inflate(R.layout.memo_list_row, null);
-        ViewHolder holder = new ViewHolder(view);//TODO: Is it OK??
+        ViewHolder holder = new ViewHolder(view);//TODO: Check here later
         view.setTag(holder);
 
         return view;
