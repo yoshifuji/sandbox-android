@@ -8,4 +8,55 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- style of text -->
+    <style name="Text"/>
+
+    <!-- large -->
+    <style name="Text.Large" parent="Text">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+    </style>
+
+    <!-- medium -->
+    <style name="Text.Medium" parent="Text">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+    </style>
+
+    <!-- small -->
+    <style name="Text.Small" parent="Text">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+    </style>
+
+    <!-- style of list item  -->
+    <style name="List"/>
+
+    <!-- item title -->
+    <style name="List.Title" parent="List">
+        <item name="android:textAppearance">@style/Text.Large</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- item description -->
+    <style name="List.Description" parent="List">
+        <item name="android:textAppearance">@style/Text.Small</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <!-- item subtext -->
+    <style name="List.SubText" parent="List">
+        <item name="android:textAppearance">@style/Text.Small</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
 </resources>
