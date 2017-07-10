@@ -59,4 +59,9 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <!-- TODO: <style name="Articles.Title">hoge</style> -->
+
+    <dimen name="text_size_large">30sp</dimen>
+    <dimen name="text_size_medium">24sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
 </resources>

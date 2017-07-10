@@ -10,9 +10,10 @@
     android:orientation="vertical">
 
     <!-- article title -->
+    <!-- TODO: @style/Articles.Title is correct ?? -->
     <TextView
         android:id="@+id/Title"
-        style="@style/Articles.Title"
+        style="@style/List.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="sample article title"

@@ -1,17 +1,16 @@
-package data;
+package com.example.sample.myrssreader.data;
 
 /**
  * Created by YoshitakaFujisawa on 2017/07/09.
  */
 
-public class Link {
+public class Site {
 
     private long id;
     private String title;
     private String description;
-    private long pubData;
     private String url;
-    private long siteid;
+    private long linkCount;
 
     public long getId() {
         return id;
@@ -37,14 +36,6 @@ public class Link {
         this.description = description;
     }
 
-    public long getPubData() {
-        return pubData;
-    }
-
-    public void setPubData(long pubData) {
-        this.pubData = pubData;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -53,11 +44,11 @@ public class Link {
         this.url = url;
     }
 
-    public long getSiteid() {
-        return siteid;
+    public long getLinkCount() {
+        return linkCount;
     }
 
-    public void setSiteid(long siteid) {
-        this.siteid = siteid;
+    public void setLinkCount(long linkCount) {
+        this.linkCount = linkCount;
     }
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyRssReader</string>
+    <string name="add_site">hoge</string>
+    <string name="site_link_count">10</string>
 </resources>
