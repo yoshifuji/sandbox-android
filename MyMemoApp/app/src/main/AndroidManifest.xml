@@ -35,6 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MemoActivity" android:label="@string/title_memo"></activity>
+        <activity android:name=".SettingActivity" android:label="@string/title_setting"></activity>
 
         <!-- Provider of memo management -->
         <provider
