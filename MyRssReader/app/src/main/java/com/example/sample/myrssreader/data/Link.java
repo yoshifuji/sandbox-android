@@ -9,9 +9,9 @@ public class Link {
     private long id;
     private String title;
     private String description;
-    private long pubData;
+    private long pubDate;
     private String url;
-    private long siteid;
+    private long siteId;
 
     public long getId() {
         return id;
@@ -37,13 +37,14 @@ public class Link {
         this.description = description;
     }
 
-    public long getPubData() {
-        return pubData;
+    public long getPubDate() {
+        return pubDate;
     }
 
-    public void setPubData(long pubData) {
-        this.pubData = pubData;
+    public void setPubDate(long pubDate) {
+        this.pubDate = pubDate;
     }
+
 
     public String getUrl() {
         return url;
@@ -53,11 +54,12 @@ public class Link {
         this.url = url;
     }
 
-    public long getSiteid() {
-        return siteid;
+    public long getSiteId() {
+        return siteId;
     }
 
-    public void setSiteid(long siteid) {
-        this.siteid = siteid;
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
     }
+
 }
