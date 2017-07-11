@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.sample.myrssreader.R;
@@ -26,10 +25,10 @@ public class LinkAdapter extends RecyclerView.Adapter {
     private LayoutInflater mInflater;
     private List<Link> mLinks;
 
-    private AdapterView.OnItemClickListener mListener;
+    private OnItemClickListener mListener;
 
-    public interface OnItemClickLisetner {
-        void OnItemClick(Link link);
+    public interface OnItemClickListener {
+        void onItemClick(Link link);
     }
 
     public LinkAdapter(Context context) {
@@ -38,8 +37,8 @@ public class LinkAdapter extends RecyclerView.Adapter {
         mLinks = new ArrayList<>();
     }
 
-    public void setOnItemClinkListener(AdapterView.OnItemClickListener listner) {
-        mListener = listner;
+    public void setOnItemClinkListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     public void addItems(List<Link> links) {
@@ -51,7 +50,7 @@ public class LinkAdapter extends RecyclerView.Adapter {
         Iterator<Link> iterator = mLinks.iterator();
         while (iterator.hasNext()) {
             Link link = iterator.next();
-            if (link.getSiteid() == feedId) {
+            if (link.getSiteId() == feedId) {
                 iterator.remove();
             }
         }
@@ -81,7 +80,7 @@ public class LinkAdapter extends RecyclerView.Adapter {
 
             articleHolder.title.setText(link.getTitle());
             articleHolder.description.setText(link.getDescription());
-            articleHolder.timeAgo.setText(mContext.getString(R.style.link_publish_date, link.getPubData()));
+            articleHolder.timeAgo.setText(mContext.getString(R.string.link_publish_date, link.getPubDate()));
         }
     }
 
@@ -114,7 +113,7 @@ public class LinkAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            if(adapter.mListener != null){
+            if (adapter.mListener != null) {
                 int position = getLayoutPosition();
                 Link data = adapter.mLinks.get(position);
                 adapter.mListener.onItemClick(data);
