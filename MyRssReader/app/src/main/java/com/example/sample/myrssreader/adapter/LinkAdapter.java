@@ -46,7 +46,7 @@ public class LinkAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void remoteItem(long feedId) {
+    public void removeItem(long feedId) {
         Iterator<Link> iterator = mLinks.iterator();
         while (iterator.hasNext()) {
             Link link = iterator.next();
