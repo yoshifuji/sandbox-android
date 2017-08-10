@@ -23,9 +23,12 @@ public class AndroidImageAdapter extends PagerAdapter {
         return sliderImagesId.length;
     }
 
+    /*
+    以下でスライド画像で表示する画像ファイルを設定する。
+    ファイル配置場所は、/app/res/drawable/直下としています。
+     */
     private int[] sliderImagesId = new int[]{
             R.drawable.image1, R.drawable.image2, R.drawable.image3,
-//            R.drawable.image1, R.drawable.image2, R.drawable.cat,
     };
 
     @Override
