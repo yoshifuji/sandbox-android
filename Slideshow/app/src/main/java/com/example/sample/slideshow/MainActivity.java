@@ -37,19 +37,7 @@ public class MainActivity extends Activity implements ViewFactory {
         context = MainActivity.this;
 
         gallery = (Gallery) findViewById(R.id.gallery);
-
-        imageSwitcher = (ImageSwitcher) findViewById(R.id.imageSwitcher);
-
-        imageSwitcher.setFactory(MainActivity.this);
-
-        imageSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_in));
-
-        imageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_out));
-
-        imageSwitcher.setAlpha(Float.parseFloat("50.0"));
-
         gallery.setAdapter(new ImageAdapter(this));
-
         gallery.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -57,6 +45,13 @@ public class MainActivity extends Activity implements ViewFactory {
                 imageSwitcher.setImageResource(images[position]);
             }
         });
+
+        imageSwitcher = (ImageSwitcher) findViewById(R.id.imageSwitcher);
+        imageSwitcher.setFactory(MainActivity.this);
+        imageSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_in));
+        imageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_out));
+        imageSwitcher.setAlpha(Float.parseFloat("50.0"));
+
     }
 
     private class ImageAdapter extends BaseAdapter {
@@ -65,19 +60,15 @@ public class MainActivity extends Activity implements ViewFactory {
         public ImageAdapter(Context context) {
             this.context = context;
         }
-
         public int getCount() {
             return images.length;
         }
-
         public Object getItem(int position) {
             return images[position];
         }
-
         public long getItemId(int position) {
             return position;
         }
-
         public View getView(int position, View convertView, ViewGroup parent) {
             ImageView imageView = new ImageView(this.context);
             imageView.setImageResource(images[position]);
