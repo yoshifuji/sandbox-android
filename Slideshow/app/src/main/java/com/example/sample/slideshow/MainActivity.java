@@ -26,8 +26,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
-import java.io.Console;
-
 public class MainActivity extends Activity implements View.OnClickListener, GestureDetector.OnGestureListener, ScaleGestureDetector.OnScaleGestureListener, ViewFactory {
 
     Gallery gallery;
@@ -58,10 +56,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         findViewById(R.id.btn_back).setOnClickListener(this);
         findViewById(R.id.btn_next).setOnClickListener(this);
-        //findViewById(R.id.imageSwitcher).setOnTouchListener(this);
 
         context = MainActivity.this;
 
@@ -77,18 +73,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
 
         imageSwitcher = (ImageSwitcher) findViewById(R.id.imageSwitcher);
         imageSwitcher.setFactory(MainActivity.this);
-
-        //Setting 'In Animation'
+        //Set 'In Animation'
         imageSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_in));
-        //Setting 'Out Animation'
+        //Set 'Out Animation'
         imageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_out));
-
         imageSwitcher.setAlpha(Float.parseFloat("50.0"));
 
+        //Set 'ジェスチャー操作'
         mGestureDetector = new GestureDetector(this, mOnGestureListener);
-        //img = (ImageView)findViewById(R.id.imageSwitcher);
-        //img.setOnTouchListener(this);
-
     }
 
     /*
@@ -129,27 +121,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
         ImageView imageView = new ImageView(context);
         imageView.setImageResource(images[imageItem]);
         return imageView;
-    }
-
-    /*
-    メニュー操作実装
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.optionsmenu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.optionsMenu_01:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     /*
@@ -198,6 +169,27 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     }
 
     /*
+    Preferenceメニュー操作を実装
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.optionsmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.optionsMenu_01:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*
     Toastメッセージ表示
     */
     protected void showMessage(String msg) {
@@ -207,7 +199,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     }
 
     /*
-    Image操作イベントを定義
+    画像操作イベントを定義
      */
     private class ImageAdapter extends BaseAdapter {
         Context context;
