@@ -7,13 +7,13 @@ package com.example.sample.slideshow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -26,22 +26,33 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
-import utils.Util;
+import java.io.Console;
 
-public class MainActivity extends Activity implements View.OnClickListener, ViewFactory {
+public class MainActivity extends Activity implements View.OnClickListener, GestureDetector.OnGestureListener, ScaleGestureDetector.OnScaleGestureListener, ViewFactory {
 
     Gallery gallery;
     ImageSwitcher imageSwitcher;
     Context context;
     int imageItem;
-    int idxImage = 0; //選択中の画像Index
+    // 選択中の画像Index
+    int imageIdx = 0;
 
+    // イメージ画像定義
     Integer[] images = {
             R.drawable.image1,
             R.drawable.image2,
             R.drawable.image3,
-            R.drawable.image4,
-            R.drawable.image5};
+            R.drawable.image5,
+            R.drawable.image4};
+
+    // タッチイベントを処理するためのインタフェース
+    private GestureDetector mGestureDetector;
+    // X軸最低スワイプ距離
+    private static final int SWIPE_MIN_DISTANCE = 50;
+    // X軸最低スワイプスピード
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    // Y軸の移動距離　これ以上なら横移動を判定しない
+    private static final int SWIPE_MAX_OFF_PATH = 250;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +61,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
 
         findViewById(R.id.btn_back).setOnClickListener(this);
         findViewById(R.id.btn_next).setOnClickListener(this);
+        //findViewById(R.id.imageSwitcher).setOnTouchListener(this);
 
         context = MainActivity.this;
 
@@ -73,19 +85,23 @@ public class MainActivity extends Activity implements View.OnClickListener, View
 
         imageSwitcher.setAlpha(Float.parseFloat("50.0"));
 
+        mGestureDetector = new GestureDetector(this, mOnGestureListener);
         //img = (ImageView)findViewById(R.id.imageSwitcher);
         //img.setOnTouchListener(this);
 
     }
 
+    /*
+    ボタンクリック操作を実装
+     */
     @Override
     public void onClick(View v) {
         int id = v.getId();
 
         switch (id){
             case R.id.btn_next:
-                idxImage = (idxImage + 1 < images.length) ? idxImage + 1 : idxImage;
-                imageSwitcher.setImageResource(images[idxImage]);
+                imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
+                imageSwitcher.setImageResource(images[imageIdx]);
 
                 /*
                 todo set updated filename
@@ -97,8 +113,8 @@ public class MainActivity extends Activity implements View.OnClickListener, View
 //                }
                 break;
             case R.id.btn_back:
-                idxImage = (idxImage > 0) ? idxImage - 1 : idxImage;
-                imageSwitcher.setImageResource(images[idxImage]);
+                imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
+                imageSwitcher.setImageResource(images[imageIdx]);
 
                 /*
                 todo set updated filename
@@ -115,6 +131,9 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         return imageView;
     }
 
+    /*
+    メニュー操作実装
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -134,8 +153,53 @@ public class MainActivity extends Activity implements View.OnClickListener, View
     }
 
     /*
-    Toastメッセージ表示
+    マウスジェスチャーイベント定義
      */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return mGestureDetector.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
+    }
+    @Override
+    public boolean onScale(ScaleGestureDetector detector) {
+        return false;
+    }
+    @Override
+    public boolean onScaleBegin(ScaleGestureDetector detector) {
+        return false;
+    }
+    @Override
+    public void onScaleEnd(ScaleGestureDetector detector) {
+
+    }
+
+    /*
+    Toastメッセージ表示
+    */
     protected void showMessage(String msg) {
         Toast.makeText(
                 this,
@@ -172,5 +236,46 @@ public class MainActivity extends Activity implements View.OnClickListener, View
             return imageView;
         }
     }
+
+    /*
+    タッチイベントのリスナー
+     */
+    private final GestureDetector.SimpleOnGestureListener mOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
+        // フリックイベント
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+            try {
+                // 移動距離・スピードを出力
+                float distance_x = Math.abs((event1.getX() - event2.getX()));
+                float velocity_x = Math.abs(velocityX);
+                //showMessage("横の移動距離:" + distance_x + " 横の移動スピード:" + velocity_x);
+
+                // Y軸の移動距離が大きすぎる場合
+                if (Math.abs(event1.getY() - event2.getY()) > SWIPE_MAX_OFF_PATH) {
+                    showMessage("縦の移動距離が大きすぎ");
+                }
+                // 開始位置から終了位置の移動距離が指定値より大きい
+                // X軸の移動速度が指定値より大きい
+                else if  (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    //showMessage("右から左");
+                    imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
+                    imageSwitcher.setImageResource(images[imageIdx]);
+                }
+                // 終了位置から開始位置の移動距離が指定値より大きい
+                // X軸の移動速度が指定値より大きい
+                else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    //showMessage("左から右");
+                    imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
+                    imageSwitcher.setImageResource(images[imageIdx]);
+                }
+
+                return true;
+            } catch (Exception e) {
+                // TODO
+            }
+
+            return false;
+        }
+    };
 
 }
