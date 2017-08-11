@@ -6,9 +6,14 @@ package com.example.sample.slideshow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -16,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
 public class MainActivity extends Activity implements ViewFactory {
@@ -54,21 +60,62 @@ public class MainActivity extends Activity implements ViewFactory {
 
     }
 
+    @Override
+    public View makeView() {
+        ImageView imageView = new ImageView(context);
+        imageView.setImageResource(images[imageItem]);
+        return imageView;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.optionsmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.optionsMenu_01:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*
+    Toastメッセージ表示
+     */
+    protected void showMessage(String msg) {
+        Toast.makeText(
+                this,
+                msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /*
+    Image操作イベントを定義
+     */
     private class ImageAdapter extends BaseAdapter {
         Context context;
 
         public ImageAdapter(Context context) {
             this.context = context;
         }
+
         public int getCount() {
             return images.length;
         }
+
         public Object getItem(int position) {
             return images[position];
         }
+
         public long getItemId(int position) {
             return position;
         }
+
         public View getView(int position, View convertView, ViewGroup parent) {
             ImageView imageView = new ImageView(this.context);
             imageView.setImageResource(images[position]);
@@ -76,12 +123,6 @@ public class MainActivity extends Activity implements ViewFactory {
 
             return imageView;
         }
-    }
-
-    public View makeView() {
-        ImageView imageView = new ImageView(context);
-        imageView.setImageResource(images[imageItem]);
-        return imageView;
     }
 
 }

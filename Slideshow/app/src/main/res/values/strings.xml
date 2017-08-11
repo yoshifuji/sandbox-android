@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Slideshow</string>
+
+    <!-- menu -->
+    <string name="preference_menu_01">セットアップ</string>
+    <!-- preference -->
+    <string name="preference_title">セットアップ</string>
+    <string name="radio_01_title">スライド順</string>
+    <string name="radio_02_title">切替方法</string>
+
 </resources>

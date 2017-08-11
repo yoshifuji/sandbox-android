@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="radio_01_listOptions">
+        <item>順列</item>
+        <item>ランダム</item>
+    </string-array>
+    <string-array name="radio_02_listOptions">
+        <item>3秒ごと</item>
+        <item>タップ時</item>
+    </string-array>
+</resources>
