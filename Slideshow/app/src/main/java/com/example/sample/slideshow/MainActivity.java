@@ -20,8 +20,6 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageSwitcher;
@@ -82,6 +80,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
         findViewById(R.id.btn_back).setOnClickListener(this);
         findViewById(R.id.btn_next).setOnClickListener(this);
         tvFileName = (TextView)findViewById(R.id.tv_filename);
+
         context = MainActivity.this;
 
         //ImageSwitcher表示
@@ -100,8 +99,15 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
         runnable = new Runnable() {
             @Override
             public void run() {
-                imageIdx++;
+                if (isRandom) {
+                    Random rand = new Random();
+                    imageIdx = rand.nextInt(images.length);
+                } else {
+                    imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
+                }
+
                 imageIdx = imageIdx % images.length;//画像数の周期で巡回させる
+
                 //      Log.d("Intro Screen", "Change Image " + index);
                 imageSwitcher.setImageResource(images[imageIdx]);
                 handler.postDelayed(this, interval);
@@ -324,10 +330,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     右隣りの画像を表示
      */
     private void showRightImage() {
-        Random rand = new Random();
-
         if (isRandom) {
-            imageIdx = rand.nextInt(5);
+            Random rand = new Random();
+            imageIdx = rand.nextInt(images.length);
         } else {
             imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
         }
@@ -340,10 +345,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     左隣りの画像を表示
      */
     private void showLeftImage() {
-        Random rand = new Random();
-
         if (isRandom) {
-            imageIdx = rand.nextInt(5);
+            Random rand = new Random();
+            imageIdx = rand.nextInt(images.length);
         } else {
             imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
         }
