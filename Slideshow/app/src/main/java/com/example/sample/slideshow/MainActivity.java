@@ -25,8 +25,11 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
+
+import java.util.Formatter;
 
 public class MainActivity extends Activity implements View.OnClickListener, GestureDetector.OnGestureListener, ScaleGestureDetector.OnScaleGestureListener, ViewFactory {
 
@@ -45,6 +48,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
             R.drawable.image4,
             R.drawable.image5};
 
+    // 画像ファイル名表示部
+    private TextView tvFileName;
+
     // タッチイベントを処理するためのインタフェース
     private GestureDetector mGestureDetector;
     // X軸最低スワイプ距離
@@ -62,12 +68,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     //自動再生時間間隔(単位はmsec)
     private final int interval = 3000;
 
+    //Preference画面の設定値
+    private static final int REQUEST_CODE = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.btn_back).setOnClickListener(this);
         findViewById(R.id.btn_next).setOnClickListener(this);
+        tvFileName = (TextView)findViewById(R.id.tv_filename);
 
         context = MainActivity.this;
 
@@ -107,6 +117,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
         //自動再生ONにする：handler.postDelayed(runnable, interval);
         //自動再生OFFにする：handler.removeCallbacks(runnable);
 
+        //画像ファイル名を設定
+        setFileName();
     }
 
     /*
@@ -118,25 +130,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
 
         switch (id){
             case R.id.btn_next:
-                imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
-                imageSwitcher.setImageResource(images[imageIdx]);
-
-                // todo set updated filename
-//                Util ut = new Util();
-//                if(ut.checkEditTextInput(numberInput1, numberInput2)){
-//                    int result = ut.calc(numberInput1, numberInput2, operatorSelector);
-//                    tv_filename.setText(String.valueOf(result));
-//                }
+                showRightImage();
+                setFileName();
                 break;
             case R.id.btn_back:
-                imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
-                imageSwitcher.setImageResource(images[imageIdx]);
-
-                //画像の自動再生処理OFF
-                handler.removeCallbacks(runnable);
-
-                // todo set updated filename
-
+                showLeftImage();
+                setFileName();
                 break;
         }
     }
@@ -213,7 +212,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
             case R.id.optionsMenu_01:
                 //IntentでPreferenceの設定を取得
                 Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+                //startActivityForResult(intent, REQUEST_CODE);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -298,5 +298,30 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
             return false;
         }
     };
+
+    /*
+    右隣りの画像を表示
+     */
+    private void showRightImage() {
+        imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
+        imageSwitcher.setImageResource(images[imageIdx]);
+    }
+
+    /*
+    左隣りの画像を表示
+     */
+    private void showLeftImage() {
+        imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
+        imageSwitcher.setImageResource(images[imageIdx]);
+    }
+
+    /*
+    画像ファイル名を表示
+     */
+    private void setFileName(){
+        Formatter fm = new Formatter();
+        fm.format("image%s", imageIdx + 1);
+        tvFileName.setText(String.valueOf(fm));
+    }
 
 }

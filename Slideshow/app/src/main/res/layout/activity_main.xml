@@ -25,28 +25,28 @@
     </ImageSwitcher>
 
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:layout_marginLeft="20dp"
-        android:text="Back" />
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/button_back" />
 
     <TextView
         android:id="@+id/tv_filename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="74dp"
         android:layout_marginLeft="120dp"
         android:text="FileName" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:layout_marginLeft="200dp"
-        android:text="Next" />
+        android:layout_marginLeft="270dp"
+        android:src="@drawable/button_next" />
 
 </RelativeLayout>
