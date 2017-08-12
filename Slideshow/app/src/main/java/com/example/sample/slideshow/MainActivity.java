@@ -277,15 +277,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
                 // X軸の移動速度が指定値より大きい
                 else if  (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     //showMessage("右から左");
-                    imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
-                    imageSwitcher.setImageResource(images[imageIdx]);
+                    showRightImage();
                 }
                 // 終了位置から開始位置の移動距離が指定値より大きい
                 // X軸の移動速度が指定値より大きい
                 else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     //showMessage("左から右");
-                    imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
-                    imageSwitcher.setImageResource(images[imageIdx]);
+                    showLeftImage();
                 }
 
                 return true;
