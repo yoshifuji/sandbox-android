@@ -8,16 +8,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.sample.slideshow.MainActivity" >
 
-    <Gallery
-        android:id="@+id/gallery"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-
     <ImageSwitcher
         android:id="@+id/imageSwitcher"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/gallery"
         android:layout_marginTop="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"

@@ -84,17 +84,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
         tvFileName = (TextView)findViewById(R.id.tv_filename);
         context = MainActivity.this;
 
-        //Gallery表示
-        gallery = (Gallery) findViewById(R.id.gallery);
-        gallery.setAdapter(new ImageAdapter(this));
-        gallery.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                imageItem = position;
-                imageSwitcher.setImageResource(images[position]);
-            }
-        });
-
         //ImageSwitcher表示
         imageSwitcher = (ImageSwitcher) findViewById(R.id.imageSwitcher);
         imageSwitcher.setFactory(MainActivity.this);
@@ -244,10 +233,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
         }
 
         if (listValueRadio02.equals("0")){
-            //自動再生ONにする
+            showMessage("自動再生ON");
             handler.postDelayed(runnable, interval);
         } else {
-            //自動再生OFFにする
+            showMessage("自動再生OFF");
             handler.removeCallbacks(runnable);
         }
     }
