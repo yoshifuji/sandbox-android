@@ -1,5 +1,7 @@
 package utils;
 
+import android.widget.ImageView;
+
 /**
  * Created by YoshitakaFujisawa on 2017/08/12.
  */
@@ -23,6 +25,15 @@ public class Util {
     public void fuga(){
 
     }
+
+    /*
+    文字列から画像のdrawableのIDを取得する
+     */
+//    public String retrieveFileName(){
+//        int imageId = getResources().getIdentifier("image" + imageIdx, "drawable", getPackageName());
+//        ImageView im = (ImageView) findViewById(imageId);
+//        return getResources().getResourceName(imageId);
+//    }
 
 }
 

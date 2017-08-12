@@ -7,7 +7,9 @@ package com.example.sample.slideshow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,8 +42,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
             R.drawable.image1,
             R.drawable.image2,
             R.drawable.image3,
-            R.drawable.image5,
-            R.drawable.image4};
+            R.drawable.image4,
+            R.drawable.image5};
 
     // タッチイベントを処理するためのインタフェース
     private GestureDetector mGestureDetector;
@@ -51,6 +53,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     // Y軸の移動距離　これ以上なら横移動を判定しない
     private static final int SWIPE_MAX_OFF_PATH = 250;
+    // 識別用のコード
+    private final static int CHOSE_FILE_CODE = 12345;
+
+    //自動再生ハンドラ
+    private final Handler handler = new Handler();
+    private Runnable runnable;
+    //自動再生時間間隔(単位はmsec)
+    private final int interval = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +91,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
 
         //Set 'ジェスチャー操作'
         mGestureDetector = new GestureDetector(this, mOnGestureListener);
+
+        //画像の自動再生処理
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                imageIdx++;
+                imageIdx = imageIdx % images.length;//画像数の周期で巡回させる
+                //      Log.d("Intro Screen", "Change Image " + index);
+                imageSwitcher.setImageResource(images[imageIdx]);
+                handler.postDelayed(this, interval);
+            }
+        };
+        //自動再生ONにする：handler.postDelayed(runnable, interval);
+        //自動再生OFFにする：handler.removeCallbacks(runnable);
+
     }
 
     /*
@@ -95,9 +121,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
                 imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
                 imageSwitcher.setImageResource(images[imageIdx]);
 
-                /*
-                todo set updated filename
-                 */
+                // todo set updated filename
 //                Util ut = new Util();
 //                if(ut.checkEditTextInput(numberInput1, numberInput2)){
 //                    int result = ut.calc(numberInput1, numberInput2, operatorSelector);
@@ -108,9 +132,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
                 imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
                 imageSwitcher.setImageResource(images[imageIdx]);
 
-                /*
-                todo set updated filename
-                 */
+                //画像の自動再生処理OFF
+                handler.removeCallbacks(runnable);
+
+                // todo set updated filename
 
                 break;
         }
@@ -169,7 +194,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     }
 
     /*
-    Preferenceメニュー操作を実装
+    Preferenceメニューを表示
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -179,10 +204,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
         return true;
     }
 
+    /*
+    Preferenceメニュー操作を実装
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.optionsMenu_01:
+                //IntentでPreferenceの設定を取得
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
         }
@@ -244,20 +273,20 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
 
                 // Y軸の移動距離が大きすぎる場合
                 if (Math.abs(event1.getY() - event2.getY()) > SWIPE_MAX_OFF_PATH) {
-                    showMessage("縦の移動距離が大きすぎ");
+                    showMessage("フリック失敗：縦の移動距離が大きすぎます");
                 }
                 // 開始位置から終了位置の移動距離が指定値より大きい
                 // X軸の移動速度が指定値より大きい
                 else if  (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     //showMessage("右から左");
-                    imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
+                    imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
                     imageSwitcher.setImageResource(images[imageIdx]);
                 }
                 // 終了位置から開始位置の移動距離が指定値より大きい
                 // X軸の移動速度が指定値より大きい
                 else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     //showMessage("左から右");
-                    imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
+                    imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
                     imageSwitcher.setImageResource(images[imageIdx]);
                 }
 
