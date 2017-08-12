@@ -131,11 +131,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
         switch (id){
             case R.id.btn_next:
                 showRightImage();
-                setFileName();
                 break;
             case R.id.btn_back:
                 showLeftImage();
-                setFileName();
                 break;
         }
     }
@@ -305,6 +303,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     private void showRightImage() {
         imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
         imageSwitcher.setImageResource(images[imageIdx]);
+        setFileName();
     }
 
     /*
@@ -313,6 +312,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     private void showLeftImage() {
         imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
         imageSwitcher.setImageResource(images[imageIdx]);
+        setFileName();
     }
 
     /*
