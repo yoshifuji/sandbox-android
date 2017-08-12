@@ -31,6 +31,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
 import java.util.Formatter;
+import java.util.Random;
 
 public class MainActivity extends Activity implements View.OnClickListener, GestureDetector.OnGestureListener, ScaleGestureDetector.OnScaleGestureListener, ViewFactory {
 
@@ -334,7 +335,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     右隣りの画像を表示
      */
     private void showRightImage() {
-        imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
+        Random rand = new Random();
+
+        if (isRandom) {
+            imageIdx = rand.nextInt(5);
+        } else {
+            imageIdx = (imageIdx + 1 < images.length) ? imageIdx + 1 : imageIdx;
+        }
+
         imageSwitcher.setImageResource(images[imageIdx]);
         setFileName();
     }
@@ -343,7 +351,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     左隣りの画像を表示
      */
     private void showLeftImage() {
-        imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
+        Random rand = new Random();
+
+        if (isRandom) {
+            imageIdx = rand.nextInt(5);
+        } else {
+            imageIdx = (imageIdx > 0) ? imageIdx - 1 : imageIdx;
+        }
+
         imageSwitcher.setImageResource(images[imageIdx]);
         setFileName();
     }
