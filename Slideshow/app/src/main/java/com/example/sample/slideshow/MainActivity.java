@@ -37,9 +37,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     Gallery gallery;
     ImageSwitcher imageSwitcher;
     Context context;
-    int imageItem;
+    private int imageItem;
     // 選択中の画像Index
-    int imageIdx = 0;
+    private int imageIdx = 0;
 
     // イメージ画像定義
     Integer[] images = {
@@ -68,6 +68,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     private Runnable runnable;
     //自動再生時間間隔(単位はmsec)
     private final int interval = 3000;
+    //画像ランダム表示フラグ
+    private boolean isRandom = false;
 
     //Preference画面へ知らせる遷移元Activity判別パラメータ
     private static final int REQUEST_CODE = 0;
@@ -79,9 +81,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
         findViewById(R.id.btn_back).setOnClickListener(this);
         findViewById(R.id.btn_next).setOnClickListener(this);
         tvFileName = (TextView)findViewById(R.id.tv_filename);
-
         context = MainActivity.this;
 
+        //Gallery表示
         gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setAdapter(new ImageAdapter(this));
         gallery.setOnItemClickListener(new OnItemClickListener() {
@@ -92,6 +94,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
             }
         });
 
+        //ImageSwitcher表示
         imageSwitcher = (ImageSwitcher) findViewById(R.id.imageSwitcher);
         imageSwitcher.setFactory(MainActivity.this);
         //Set 'In Animation'
@@ -107,12 +110,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
         runnable = new Runnable() {
             @Override
             public void run() {
-
                 imageIdx++;
                 imageIdx = imageIdx % images.length;//画像数の周期で巡回させる
                 //      Log.d("Intro Screen", "Change Image " + index);
                 imageSwitcher.setImageResource(images[imageIdx]);
                 handler.postDelayed(this, interval);
+                setFileName(); //画像ファイル名を設定
             }
         };
         //自動再生ONにする：handler.postDelayed(runnable, interval);
@@ -233,8 +236,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
 
         if (listValueRadio01.equals("0")){
             showMessage("順列表示");
+            isRandom = false;
         } else {
             showMessage("ランダム表示");
+            isRandom = true;
         }
 
         if (listValueRadio02.equals("0")){
