@@ -7,9 +7,10 @@ package com.example.sample.slideshow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -68,7 +69,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     //自動再生時間間隔(単位はmsec)
     private final int interval = 3000;
 
-    //Preference画面の設定値
+    //Preference画面へ知らせる遷移元Activity判別パラメータ
     private static final int REQUEST_CODE = 0;
 
     @Override
@@ -191,7 +192,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     }
 
     /*
-    Preferenceメニューを表示
+    Preference画面を表示
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -202,7 +203,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
     }
 
     /*
-    Preferenceメニュー操作を実装
+    Preference画面操作を実装
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -210,10 +211,39 @@ public class MainActivity extends Activity implements View.OnClickListener, Gest
             case R.id.optionsMenu_01:
                 //IntentでPreferenceの設定を取得
                 Intent intent = new Intent(this, SettingsActivity.class);
-                //startActivityForResult(intent, REQUEST_CODE);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+    Preference画面設定値を取得
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode, data);
+
+        //SharedPreferenceから値を取得※nullなら初期値
+        SharedPreferences spf = PreferenceManager.getDefaultSharedPreferences(this);
+        //スライド順
+        String listValueRadio01 = spf.getString("radio_01_key", "0");
+        //切替方法
+        String listValueRadio02 = spf.getString("radio_02_key", "0");
+
+        if (listValueRadio01.equals("0")){
+            showMessage("順列表示");
+        } else {
+            showMessage("ランダム表示");
+        }
+
+        if (listValueRadio02.equals("0")){
+            //自動再生ONにする
+            handler.postDelayed(runnable, interval);
+        } else {
+            //自動再生OFFにする
+            handler.removeCallbacks(runnable);
+        }
     }
 
     /*

@@ -14,5 +14,4 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference);
     }
-
 }
