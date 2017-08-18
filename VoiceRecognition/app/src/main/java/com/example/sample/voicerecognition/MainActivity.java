@@ -1,85 +1,147 @@
 package com.example.sample.voicerecognition;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import com.example.sample.voicerecognition.R.id;
 
-import java.util.ArrayList;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, RecognitionListener {
 
-public class MainActivity extends AppCompatActivity {
+    private static final String LOGTAG = "SpeechAPI";
+    private SpeechRecognizer mSpeechRecognizer;
 
-    // = 0 の部分は、適当な値に変更してください（とりあえず試すには問題ないですが）
-    private static final int REQUEST_CODE = 0;
-
+    /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // listener登録
+        ((Button) findViewById(R.id.button1)).setOnClickListener(this);
+
+        mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        mSpeechRecognizer.setRecognitionListener(this);
     }
 
-    // startActivityForResultで起動したアクティビティが終了した時に呼び出される関数
+    // 音声認識準備完了
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // 音声認識結果のとき
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            // 結果文字列リストを取得
-            ArrayList<String> results = data.getStringArrayListExtra(
-                    RecognizerIntent.EXTRA_RESULTS);
-            // 取得した文字列を結合
-            String resultsString = "";
-            for (int i = 0; i < results.size(); i++) {
-                resultsString += results.get(i)+";";
-            }
-            // トーストを使って結果表示
-            Toast.makeText(this, resultsString, Toast.LENGTH_LONG).show();
+    public void onReadyForSpeech(Bundle params) {
+        Toast.makeText(this, "音声認識準備完了", Toast.LENGTH_SHORT);
+    }
+
+    // 音声入力開始
+    @Override
+    public void onBeginningOfSpeech() {
+        Toast.makeText(this, "入力開始", Toast.LENGTH_SHORT);
+    }
+
+    // 録音データのフィードバック用
+    @Override
+    public void onBufferReceived(byte[] buffer) {
+        Log.v(LOGTAG,"onBufferReceived");
+    }
+
+    // 入力音声のdBが変化した
+    @Override
+    public void onRmsChanged(float rmsdB) {
+        Log.v(LOGTAG,"recieve : " + rmsdB + "dB");
+    }
+
+    // 音声入力終了
+    @Override
+    public void onEndOfSpeech() {
+        Toast.makeText(this, "入力終了", Toast.LENGTH_SHORT);
+    }
+
+    // ネットワークエラー又は、音声認識エラー
+    @Override
+    public void onError(int error) {
+        switch (error) {
+            case SpeechRecognizer.ERROR_AUDIO: //error:3
+                // 音声データ保存失敗
+                break;
+            case SpeechRecognizer.ERROR_CLIENT: //error:5
+                // Android端末内のエラー(その他)
+                break;
+            case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS: //error:9
+                // 権限無し
+                break;
+            case SpeechRecognizer.ERROR_NETWORK:  //error:2
+                // ネットワークエラー(その他)
+                Log.e(LOGTAG, "network error");
+                break;
+            case SpeechRecognizer.ERROR_NETWORK_TIMEOUT: //error:1
+                // ネットワークタイムアウトエラー
+                Log.e(LOGTAG, "network timeout");
+                break;
+            case SpeechRecognizer.ERROR_NO_MATCH: //error:7
+                // 音声認識結果無し
+                Toast.makeText(this, "no match Text data", Toast.LENGTH_LONG);
+                break;
+            case SpeechRecognizer.ERROR_RECOGNIZER_BUSY: //error:8
+                // RecognitionServiceへ要求出せず
+                break;
+            case SpeechRecognizer.ERROR_SERVER: //error:4
+                // Server側からエラー通知
+                break;
+            case SpeechRecognizer.ERROR_SPEECH_TIMEOUT: //error:6
+                // 音声入力無し
+                Toast.makeText(this, "no input?", Toast.LENGTH_LONG);
+                break;
+            default:
+        }
+    }
+
+    // イベント発生時に呼び出される
+    @Override
+    public void onEvent(int eventType, Bundle params) {
+        Log.v(LOGTAG,"onEvent");
+    }
+
+    // 部分的な認識結果が得られる場合に呼び出される
+    @Override
+    public void onPartialResults(Bundle partialResults) {
+        Log.v(LOGTAG,"onPartialResults");
+    }
+
+    // 認識結果
+    @Override
+    public void onResults(Bundle results) {
+        ArrayList recData = results
+                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+
+        String getData = new String();
+        for (Object s : recData) {
+            getData += s + ",";
         }
 
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    /*
-    Toastメッセージ表示
-    */
-    protected void showMessage(String msg) {
-        Toast.makeText(
-                this,
-                msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getData, Toast.LENGTH_SHORT).show();
     }
 
     // タッチイベントが起きたら呼ばれる関数
-    public boolean onTouchEvent(MotionEvent event) {
-        // 画面から指が離れるイベントの場合のみ実行
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            try {
-                // 音声認識プロンプトを立ち上げるインテント作成
-                Intent intent = new Intent(
-                        RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                // 言語モデルをfree-form speech recognitionに設定
-                // web search terms用のLANGUAGE_MODEL_WEB_SEARCHにすると検索画面になる
-                intent.putExtra(
-                        RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button1:
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                         RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                // プロンプトに表示する文字を設定
-                intent.putExtra(
-                        RecognizerIntent.EXTRA_PROMPT,
-                        "話してください");
-                // インテント発行
-                startActivityForResult(intent, REQUEST_CODE);
-            } catch (ActivityNotFoundException e) {
-                // エラー表示
-                Toast.makeText(MainActivity.this,
-                        "ActivityNotFoundException", Toast.LENGTH_LONG).show();
-            }
+
+                intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
+                        getApplication().getPackageName());
+                mSpeechRecognizer.startListening(intent);
+
+                break;
+            default:
+                break;
         }
-        return true;
     }
 }
