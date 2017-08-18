@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import com.example.sample.voicerecognition.R.id;
 
 import java.util.ArrayList;
@@ -22,53 +24,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Button button = (Button) findViewById(id.button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    // インテント作成
-                    Intent intent = new Intent(
-                            RecognizerIntent.ACTION_RECOGNIZE_SPEECH); // ACTION_WEB_SEARCH
-                    intent.putExtra(
-                            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                    intent.putExtra(
-                            RecognizerIntent.EXTRA_PROMPT,
-                            "VoiceRecognitionTest"); // お好きな文字に変更できます
-
-                    // インテント発行
-                    startActivityForResult(intent, REQUEST_CODE);
-                } catch (ActivityNotFoundException e) {
-                    // このインテントに応答できるアクティビティがインストールされていない場合
-//                    Toast.makeText(VoiceRecognitionTestActivity.this,
-//                            "ActivityNotFoundException", Toast.LENGTH_LONG).show();
-                    showMessage("VoiceRecognitionActivity NotFoundException");
-                }
-            }
-        });
-
     }
 
-    // アクティビティ終了時に呼び出される
+    // startActivityForResultで起動したアクティビティが終了した時に呼び出される関数
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // 自分が投げたインテントであれば応答する
+        // 音声認識結果のとき
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            String resultsString = "";
-
-            // 結果文字列リスト
+            // 結果文字列リストを取得
             ArrayList<String> results = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
-
-            for (int i = 0; i< results.size(); i++) {
-                // ここでは、文字列が複数あった場合に結合しています
-                resultsString += results.get(i);
+            // 取得した文字列を結合
+            String resultsString = "";
+            for (int i = 0; i < results.size(); i++) {
+                resultsString += results.get(i)+";";
             }
-
-            // トーストを使って結果を表示
+            // トーストを使って結果表示
             Toast.makeText(this, resultsString, Toast.LENGTH_LONG).show();
         }
 
@@ -82,5 +53,33 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(
                 this,
                 msg, Toast.LENGTH_SHORT).show();
+    }
+
+    // タッチイベントが起きたら呼ばれる関数
+    public boolean onTouchEvent(MotionEvent event) {
+        // 画面から指が離れるイベントの場合のみ実行
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            try {
+                // 音声認識プロンプトを立ち上げるインテント作成
+                Intent intent = new Intent(
+                        RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                // 言語モデルをfree-form speech recognitionに設定
+                // web search terms用のLANGUAGE_MODEL_WEB_SEARCHにすると検索画面になる
+                intent.putExtra(
+                        RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                // プロンプトに表示する文字を設定
+                intent.putExtra(
+                        RecognizerIntent.EXTRA_PROMPT,
+                        "話してください");
+                // インテント発行
+                startActivityForResult(intent, REQUEST_CODE);
+            } catch (ActivityNotFoundException e) {
+                // エラー表示
+                Toast.makeText(MainActivity.this,
+                        "ActivityNotFoundException", Toast.LENGTH_LONG).show();
+            }
+        }
+        return true;
     }
 }
