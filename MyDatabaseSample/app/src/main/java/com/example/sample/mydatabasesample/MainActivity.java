@@ -8,9 +8,15 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String DB = "sqlite_sample.db";
     static final int DB_VERSION = 1;
-    static final String CREATE_TABLE = "create table mytable ( _id integer primary key autoincrement, data integer not null );";
+    //DB名
+    static final String DB = "sqlite_sample.db";
+    //TABLE定義
+    static final String CREATE_TABLE = "create table mytable (" +
+            "_id integer primary key autoincrement, " +
+            "user text not null, " +
+            "comment text" +
+            ");";
     static final String DROP_TABLE = "drop table mytable;";
 
     @Override
@@ -21,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
     Inner class for local database
+    [Refer]https://techbooster.org/android/application/567/
      */
     private static class MySQLiteOpenHelper extends SQLiteOpenHelper {
         public MySQLiteOpenHelper(Context c) {
