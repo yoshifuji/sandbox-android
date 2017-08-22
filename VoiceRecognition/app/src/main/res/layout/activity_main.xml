@@ -10,7 +10,7 @@
     tools:context="com.example.sample.voicerecognition.MainActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_odai"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -18,31 +18,36 @@
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/button_next" />
 
-    <TextView
-        android:id="@+id/textView"
+    <EditText
+        android:id="@+id/txt_odai"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:text="-"
-        android:layout_below="@+id/button2"
-        android:layout_alignStart="@+id/button2" />
+        android:layout_alignStart="@+id/btn_odai"
+        android:layout_below="@+id/btn_odai"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="-" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_rokuon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
+        android:layout_marginTop="108dp"
         android:text="録音"
-        android:layout_below="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_below="@+id/btn_odai"
+        android:layout_alignStart="@+id/btn_odai" />
 
-    <TextView
-        android:id="@+id/textView2"
+
+    <EditText
+        android:id="@+id/txt_rokuon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/button3"
-        android:layout_below="@+id/button3"
-        android:layout_marginTop="23dp"
+        android:layout_alignStart="@+id/btn_rokuon"
+        android:layout_below="@+id/btn_rokuon"
+        android:layout_marginTop="11dp"
+        android:ems="10"
+        android:inputType="textPersonName"
         android:text="-" />
 
     <Button
