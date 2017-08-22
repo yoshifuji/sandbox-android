@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //録音用変数
     private static final String LOGTAG = "SpeechAPI";
     private SpeechRecognizer mSpeechRecognizer;
+    private int countRokuon = 0;
     //お題サンプル
     private String[] arrayOdai  = {"庭には二羽鶏がいる", "隣の竹やぶに丈かけかけた", "赤巻紙青巻紙黄巻紙", "隣の客はよく柿食う客だ", "老若男女", "東京特許許可局許可局長"};
 
@@ -34,7 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //画面遷移イベント登録
         setScreenMain();
-        // listener登録（音声認識）
+
+        //listener登録（ボタン操作）
+        findViewById(R.id.btn_odai).setOnClickListener(this);
+
+        //listener登録（音声認識）
         mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mSpeechRecognizer.setRecognitionListener(this);
         //ランダムなお題文言をセット
@@ -138,11 +143,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(this, getData, Toast.LENGTH_SHORT).show();
     }
 
-    // タッチイベントが起きたら呼ばれる関数
+    /*
+    録音関連のタッチイベント処理
+    */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_next:
+            case R.id.btn_rokuon:
+                //録音を開始する
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                         RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -151,6 +159,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         getApplication().getPackageName());
                 mSpeechRecognizer.startListening(intent);
 
+                countRokuon++; //5回録音後、"次へ"ボタンのラベル名を変更する
+                if(countRokuon == 5){
+                    sendButton.setText("結果");
+                }
+                break;
+            case R.id.btn_odai:
+                //お題をリセットする
+                setOdai();
                 break;
             default:
                 break;
@@ -166,10 +182,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setScreenSub();
-
-                resultOdai = (TextView)findViewById(R.id.tv_rokuon_odai);
-                resultOdai.setText(tempOdai);
+                if(countRokuon > 4) {
+                    setScreenSub();
+                    resultOdai = (TextView)findViewById(R.id.tv_rokuon_odai);
+                    resultOdai.setText(tempOdai);//結果画面のお題をセット
+                    countRokuon = 0;
+                }
+//                countRokuon++;
+//                if(countRokuon == 5){
+//                    sendButton.setText("結果");
+//                }
             }
         });
     }
@@ -184,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 setScreenMain();
-                setOdai(); //お題をリセット
+                setOdai(); //録音画面のお題をリセット
             }
         });
     }
