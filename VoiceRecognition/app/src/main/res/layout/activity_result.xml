@@ -20,7 +20,7 @@
         android:text="結果" />
 
     <TextView
-        android:id="@+id/tv_odai"
+        android:id="@+id/tv_title_odai"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/tv_result"
@@ -29,120 +29,102 @@
         android:text="お題" />
 
     <TextView
-        android:id="@+id/tv_speech_1"
+        android:id="@+id/tv_title_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tv_odai"
-        android:layout_below="@+id/tv_odai"
+        android:layout_alignStart="@+id/tv_title_odai"
+        android:layout_below="@+id/tv_title_odai"
         android:layout_marginTop="30dp"
         android:text="1人目" />
 
     <TextView
-        android:id="@+id/tv_speech_2"
+        android:id="@+id/tv_title_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tv_speech_1"
-        android:layout_below="@+id/tv_speech_1"
+        android:layout_alignStart="@+id/tv_title_1"
+        android:layout_below="@+id/tv_title_1"
         android:layout_marginTop="30dp"
         android:text="2人目" />
 
     <TextView
-        android:id="@+id/tv_speech_3"
+        android:id="@+id/tv_title_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tv_speech_2"
-        android:layout_below="@+id/tv_speech_2"
+        android:layout_alignStart="@+id/tv_title_2"
+        android:layout_below="@+id/tv_title_2"
         android:layout_marginTop="30dp"
         android:text="3人目" />
 
     <TextView
-        android:id="@+id/tv_speech_4"
+        android:id="@+id/tv_title_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tv_speech_3"
-        android:layout_below="@+id/tv_speech_3"
+        android:layout_alignStart="@+id/tv_title_3"
+        android:layout_below="@+id/tv_title_3"
         android:layout_marginTop="30dp"
         android:text="4人目" />
 
     <TextView
-        android:id="@+id/tv_speech_5"
+        android:id="@+id/tv_title_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_speech_4"
-        android:layout_alignStart="@+id/tv_speech_4"
+        android:layout_below="@+id/tv_title_4"
+        android:layout_alignStart="@+id/tv_title_4"
         android:layout_marginTop="30dp"
         android:text="5人目" />
 
-    <EditText
-        android:id="@+id/txt_speech_odai"
+    <!-- speech message -->
+    <TextView
+        android:id="@+id/tv_rokuon_odai"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tv_odai"
-        android:layout_alignBottom="@+id/tv_odai"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="7dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_alignBottom="@+id/tv_title_odai"
+        android:layout_alignStart="@+id/btn_retry"
         android:text="-" />
 
-    <EditText
-        android:id="@+id/txt_speech_1"
+    <TextView
+        android:id="@+id/tv_rokuon_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="-"
-        android:layout_alignBaseline="@+id/tv_speech_1"
-        android:layout_alignBottom="@+id/tv_speech_1"
-        android:layout_alignStart="@+id/txt_speech_odai" />
-
-    <EditText
-        android:id="@+id/txt_speech_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="-"
-        android:layout_alignBaseline="@+id/tv_speech_2"
-        android:layout_alignBottom="@+id/tv_speech_2"
-        android:layout_alignStart="@+id/txt_speech_1" />
-
-    <EditText
-        android:id="@+id/txt_speech_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tv_speech_3"
-        android:layout_alignBottom="@+id/tv_speech_3"
-        android:layout_alignStart="@+id/txt_speech_2"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_alignBottom="@+id/tv_title_1"
+        android:layout_alignStart="@+id/tv_rokuon_odai"
         android:text="-" />
 
-    <EditText
-        android:id="@+id/txt_speech_4"
+    <TextView
+        android:id="@+id/tv_rokuon_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="-"
-        android:layout_alignBaseline="@+id/tv_speech_4"
-        android:layout_alignBottom="@+id/tv_speech_4"
-        android:layout_alignStart="@+id/txt_speech_3" />
+        android:layout_alignBottom="@+id/tv_title_2"
+        android:layout_alignStart="@+id/tv_rokuon_1"
+        android:text="-" />
 
-    <EditText
-        android:id="@+id/txt_speech_5"
+    <TextView
+        android:id="@+id/tv_rokuon_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="-"
-        android:layout_alignBaseline="@+id/tv_speech_5"
-        android:layout_alignBottom="@+id/tv_speech_5"
-        android:layout_alignStart="@+id/txt_speech_4" />
+        android:layout_alignBottom="@+id/tv_title_3"
+        android:layout_alignStart="@+id/tv_rokuon_2"
+        android:text="-" />
 
-    <!-- Retry button -->
+    <TextView
+        android:id="@+id/tv_rokuon_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_title_5"
+        android:layout_alignStart="@+id/tv_rokuon_3"
+        android:text="-" />
+
+    <TextView
+        android:id="@+id/tv_rokuon_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_title_5"
+        android:layout_alignStart="@+id/tv_rokuon_4"
+        android:text="-" />
+
+    <!-- retry button -->
     <Button
-        android:id="@+id/button_retry"
+        android:id="@+id/btn_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="リトライ"

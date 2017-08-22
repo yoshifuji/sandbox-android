@@ -16,17 +16,15 @@
         android:layout_marginTop="24dp"
         android:text="お題"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/button_next" />
+        android:layout_toStartOf="@+id/btn_next" />
 
-    <EditText
-        android:id="@+id/txt_odai"
+    <TextView
+        android:id="@+id/tv_main_odai"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/btn_odai"
         android:layout_below="@+id/btn_odai"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_marginTop="15dp"
         android:text="-" />
 
     <Button
@@ -38,24 +36,21 @@
         android:layout_below="@+id/btn_odai"
         android:layout_alignStart="@+id/btn_odai" />
 
-
-    <EditText
-        android:id="@+id/txt_rokuon"
+    <TextView
+        android:id="@+id/tv_rokuon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btn_rokuon"
+        android:text="-"
         android:layout_below="@+id/btn_rokuon"
-        android:layout_marginTop="11dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="-" />
+        android:layout_alignStart="@+id/btn_rokuon"
+        android:layout_marginTop="20dp" />
 
     <Button
-        android:id="@+id/button_next"
+        android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="次へ"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="16dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 

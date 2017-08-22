@@ -9,26 +9,36 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, RecognitionListener {
 
+    //画面処理用変数
+    private Button sendButton, returnButton;
+    private TextView mainOdai, resultOdai;
+    private String tempOdai = "";
+    //録音用変数
     private static final String LOGTAG = "SpeechAPI";
     private SpeechRecognizer mSpeechRecognizer;
+    //お題サンプル
+    private String[] arrayOdai  = {"庭には二羽鶏がいる", "隣の竹やぶに丈かけかけた", "赤巻紙青巻紙黄巻紙", "隣の客はよく柿食う客だ", "老若男女", "東京特許許可局許可局長"};
 
-    /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // listener登録
-        ((Button) findViewById(R.id.button_next)).setOnClickListener(this);
-
+        //画面遷移イベント登録
+        setScreenMain();
+        // listener登録（音声認識）
         mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mSpeechRecognizer.setRecognitionListener(this);
+        //ランダムなお題文言をセット
+        setOdai();
     }
 
     // 音声認識準備完了
@@ -112,7 +122,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.v(LOGTAG,"onPartialResults");
     }
 
-    // 認識結果
+    /*
+    認識結果を処理
+    */
     @Override
     public void onResults(Bundle results) {
         ArrayList recData = results
@@ -130,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_next:
+            case R.id.btn_next:
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                         RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -143,5 +155,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    /*
+    ボタン押下で"結果画面"へ遷移する
+     */
+    private void setScreenMain(){
+        setContentView(R.layout.activity_main);
+        sendButton = (Button) findViewById(R.id.btn_next);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setScreenSub();
+
+                resultOdai = (TextView)findViewById(R.id.tv_rokuon_odai);
+                resultOdai.setText(tempOdai);
+            }
+        });
+    }
+
+    /*
+    ボタン押下で"録音画面"へ遷移する
+     */
+    private void setScreenSub(){
+        setContentView(R.layout.activity_result);
+        returnButton = (Button) findViewById(R.id.btn_retry);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setScreenMain();
+                setOdai(); //お題をリセット
+            }
+        });
+    }
+
+    /*
+    ランダムなお題をセットする
+     */
+    private void setOdai(){
+        String randomStr = arrayOdai[new Random().nextInt(arrayOdai.length)];
+        mainOdai = (TextView)findViewById(R.id.tv_main_odai);
+        mainOdai.setText(randomStr);
+        tempOdai = randomStr; //結果画面用に一時的に保持
     }
 }
