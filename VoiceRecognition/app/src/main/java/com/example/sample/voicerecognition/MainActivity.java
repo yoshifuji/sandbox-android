@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -135,12 +136,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayList recData = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
-        String getData = new String();
-        for (Object s : recData) {
-            getData += s + ",";
-        }
+//        for (Object s : recData) {
+//            getData += s + ",";
+//        }
+        //音声認識候補が複数提示されることもあるが、先頭のものが最適解のため先頭のみ取得
+        String getData = (String) recData.get(0);
 
-        Toast.makeText(this, getData, Toast.LENGTH_SHORT).show();
+        if(getData != null && !getData.isEmpty()){
+            setRokuonResult(getData);
+            countRokuon++;
+
+            Toast.makeText(this, getData, Toast.LENGTH_SHORT).show();
+        }
     }
 
     /*
@@ -159,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         getApplication().getPackageName());
                 mSpeechRecognizer.startListening(intent);
 
-                countRokuon++; //5回録音後、"次へ"ボタンのラベル名を変更する
+                //5回録音後、"次へ"ボタンのラベル名を変更する
                 if(countRokuon == 5){
                     sendButton.setText("結果");
                 }
@@ -182,16 +189,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(countRokuon > 4) {
+                //if(countRokuon > 4) {
                     setScreenSub();
                     resultOdai = (TextView)findViewById(R.id.tv_rokuon_odai);
                     resultOdai.setText(tempOdai);//結果画面のお題をセット
                     countRokuon = 0;
-                }
-//                countRokuon++;
-//                if(countRokuon == 5){
-//                    sendButton.setText("結果");
-//                }
+
+                    setResultImage();//ゲーム結果の正否画像をセット
+                //}
             }
         });
     }
@@ -219,5 +224,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainOdai = (TextView)findViewById(R.id.tv_main_odai);
         mainOdai.setText(randomStr);
         tempOdai = randomStr; //結果画面用に一時的に保持
+    }
+
+    /*
+    録音内容を次話者のお題にセットする
+     */
+    private void setRokuonResult(String result){
+        mainOdai = (TextView)findViewById(R.id.tv_main_odai);
+        mainOdai.setText(result);
+    }
+
+    /*
+    ゲーム結果の正否画像を表示する
+     */
+    private void setResultImage(){
+        ImageView viewResult = (ImageView)findViewById(R.id.iv_result);
+
+        if(true){
+            viewResult.setImageResource(R.drawable.result_correct);
+        } else {
+            viewResult.setImageResource(R.drawable.result_incorrect);
+        }
     }
 }
