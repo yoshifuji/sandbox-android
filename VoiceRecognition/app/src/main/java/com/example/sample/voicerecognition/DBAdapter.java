@@ -13,17 +13,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBAdapter {
 
     private final static String DB_NAME = "rokuon.db";  // DB名
-    private final static String DB_TABLE = "speech";    // DBのテーブル名
+    private final static String DB_TABLE = "rokuon";    // DBのテーブル名
     private final static int DB_VERSION = 1;            // DBのバージョン
 
     /**
      * DBのカラム名
      */
-    public final static String COL_ID = "_id";             // id
-    public final static String COL_PRODUCT = "product";    // 品名
-    public final static String COL_MADEIN  = "madein";     // 産地
-    public final static String COL_NUMBER  = "number";     // 個数
-    public final static String COL_PRICE   = "price";      // 単価
+    public final static String COL_ID       = "_id";      // id
+    public final static String COL_GID      = "group_id"; // グループID
+    public final static String COL_USER     = "user";     // ユーザー名
+    public final static String COL_ROKUON   = "rokuon";   // 録音
 
     private SQLiteDatabase db = null; // SQLiteDatabase
     private DBHelper dbHelper = null; // DBHepler
@@ -54,21 +53,19 @@ public class DBAdapter {
     /**
      * DBのレコードへ登録
      *
-     * @param product 品名
-     * @param madein  産地
-     * @param number  個数
-     * @param price   単価
+     * @param gid
+     * @param user
+     * @param rokuon
      */
-    public void saveDB(String product, String madein, int number, int price) {
+    public void saveRokuon(int gid, String user, String rokuon) {
 
         db.beginTransaction(); // トランザクション開始
 
         try {
             ContentValues values = new ContentValues(); // ContentValuesでデータを設定していく
-            values.put(COL_PRODUCT, product);
-            values.put(COL_MADEIN, madein);
-            values.put(COL_NUMBER, number);
-            values.put(COL_PRICE, price);
+            values.put(COL_GID, gid);
+            values.put(COL_USER, user);
+            values.put(COL_ROKUON, rokuon);
 
             // insertメソッド データ登録
             // 第1引数：DBのテーブル名
@@ -87,20 +84,15 @@ public class DBAdapter {
     /**
      * DBのデータを取得
      *
-     * @param columns String[] 取得するカラム名 nullの場合は全カラムを取得
      * @return DBのデータ
      */
-    public Cursor getDB(String[] columns) {
+    public Cursor getLatestRokuonGroup() {
 
-        // queryメソッド DBのデータを取得
-        // 第1引数：DBのテーブル名
-        // 第2引数：取得するカラム名
-        // 第3引数：選択条件(WHERE句)
-        // 第4引数：第3引数のWHERE句において?を使用した場合に使用
-        // 第5引数：集計条件(GROUP BY句)
-        // 第6引数：選択条件(HAVING句)
-        // 第7引数：ソート条件(ODERBY句)
-        return db.query(DB_TABLE, columns, null, null, null, null, null);
+        String query = "SELECT orgin.content FROM DB_TABLE orgin"
+                + " INNER JOIN (SELECT MAX(COL_GID) COL_GID FROM DB_TABLE) temp"
+                + " ON orgin.COL_GID = temp.COL_GID";
+
+        return db.rawQuery(query, null);
     }
 
     /**
@@ -129,10 +121,9 @@ public class DBAdapter {
             //テーブルを作成するSQL文の定義 ※スペースに気を付ける
             String createTbl = "CREATE TABLE " + DB_TABLE + " ("
                     + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + COL_PRODUCT + " TEXT NOT NULL,"
-                    + COL_MADEIN + " TEXT NOT NULL,"
-                    + COL_NUMBER + " INTEGER NOT NULL,"
-                    + COL_PRICE + " INTEGER NOT NULL"
+                    + COL_GID + " INTEGER NOT NULL,"
+                    + COL_USER + " TEXT NOT NULL,"
+                    + COL_ROKUON + " TEXT NOT NULL"
                     + ");";
 
             db.execSQL(createTbl);      //SQL文の実行
@@ -155,7 +146,7 @@ public class DBAdapter {
 
         /**
          * DB破棄時に呼ばれる
-         * onCreate()
+         * onDrop()
          *
          * @param db SQLiteDatabase
          */
