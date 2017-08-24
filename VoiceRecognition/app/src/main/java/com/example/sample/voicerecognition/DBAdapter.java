@@ -82,15 +82,27 @@ public class DBAdapter {
     }
 
     /**
-     * DBのデータを取得
+     * DBの録音データを取得
      *
-     * @return DBのデータ
+     * @return DBデータ
      */
     public Cursor getLatestRokuonGroup() {
 
-        String query = "SELECT orgin.content FROM DB_TABLE orgin"
-                + " INNER JOIN (SELECT MAX(COL_GID) COL_GID FROM DB_TABLE) temp"
+        String query = "SELECT orgin.content FROM "+ DB_TABLE +" orgin"
+                + " INNER JOIN (SELECT MAX(COL_GID) COL_GID FROM "+ DB_TABLE +") temp"
                 + " ON orgin.COL_GID = temp.COL_GID";
+
+        return db.rawQuery(query, null);
+    }
+
+    /**
+     * DBのグループID最大値を取得
+     *
+     * @return DBデータ
+     */
+    public Cursor getMaxGroupID() {
+
+        String query = "SELECT MAX(COL_GID) COL_GID FROM " + DB_TABLE;
 
         return db.rawQuery(query, null);
     }
