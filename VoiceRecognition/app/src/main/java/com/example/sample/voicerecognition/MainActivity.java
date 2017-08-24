@@ -1,6 +1,7 @@
 package com.example.sample.voicerecognition;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, RecognitionListener {
@@ -29,6 +31,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //お題サンプル
     private String[] arrayOdai  = {"庭には二羽鶏がいる", "隣の竹やぶに丈かけかけた", "赤巻紙青巻紙黄巻紙", "隣の客はよく柿食う客だ", "老若男女", "東京特許許可局許可局長"};
 
+    //Database制御変数
+    private DBAdapter dbAdapter;
+    private int groupID = 0;
+    List<String> resultRokuon = new ArrayList<>();
+
+    // Activity開始処理
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +51,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //listener登録（音声認識）
         mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mSpeechRecognizer.setRecognitionListener(this);
+
+        //DBを開く
+        dbAdapter = new DBAdapter(this);
+        dbAdapter.openDB();
+
+        Cursor c = dbAdapter.getMaxGroupID();
+        c.moveToFirst();
+        groupID = c.getInt(0);
+        //Log.d("Debug", String.valueOf(cnt));
+        Toast.makeText(this, "検証GroupID：" + String.valueOf(groupID), Toast.LENGTH_SHORT);
+
         //ランダムなお題文言をセット
         setOdai();
+    }
+
+    // Activity終了処理
+    @Override
+    protected void onDestroy() {
+        //DBを閉じる
+        dbAdapter.closeDB();
+        super.onDestroy();
     }
 
     // 音声認識準備完了
@@ -192,10 +219,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //if(countRokuon > 4) {
                     setScreenSub();
                     resultOdai = (TextView)findViewById(R.id.tv_rokuon_odai);
-                    resultOdai.setText(tempOdai);//結果画面のお題をセット
-                    countRokuon = 0;
+                    resultOdai.setText(tempOdai);//結果画面へお題を転記
 
-                    setResultImage();//ゲーム結果の正否画像をセット
+                    setRokuonResult(); //Databaseの回答を、回答画面の回答欄にセット
+                    boolean isCorrect = judgeResult(); //ゲーム結果の正否判定
+
+                    setResultImage(isCorrect); //ゲーム結果の正否画像をセット
                 //}
             }
         });
@@ -224,12 +253,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainOdai = (TextView)findViewById(R.id.tv_main_odai);
         mainOdai.setText(randomStr);
         tempOdai = randomStr; //結果画面用に一時的に保持
+
+        groupID++; //お題がリセットされると話者グループを更新
+        countRokuon = 0;
     }
 
     /*
-    録音内容を次話者のお題にセットする
+    録音結果を処理する
      */
     private void setRokuonResult(String result){
+        //Databaseに登録する
+        dbAdapter.saveRokuon(groupID, String.valueOf(countRokuon), result);
+
+        //録音内容を次話者のお題にセットする
         mainOdai = (TextView)findViewById(R.id.tv_main_odai);
         mainOdai.setText(result);
     }
@@ -237,13 +273,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /*
     ゲーム結果の正否画像を表示する
      */
-    private void setResultImage(){
+    private void setResultImage(boolean isCorrect){
         ImageView viewResult = (ImageView)findViewById(R.id.iv_result);
 
-        if(true){
+        if(isCorrect){
             viewResult.setImageResource(R.drawable.result_correct);
         } else {
             viewResult.setImageResource(R.drawable.result_incorrect);
         }
+    }
+
+    /*
+    5人分の録音結果をDatabaseから取得し、結果画面の回答欄に設定する
+     */
+    private void setRokuonResult(){
+
+    }
+
+    /*
+    5人目の回答が最初のお題と一致していることを確認する
+     */
+    private boolean judgeResult(){
+        boolean isCorrect = true;
+
+        return isCorrect;
     }
 }

@@ -12,17 +12,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBAdapter {
 
-    private final static String DB_NAME = "rokuon.db";  // DB名
-    private final static String DB_TABLE = "rokuon";    // DBのテーブル名
-    private final static int DB_VERSION = 1;            // DBのバージョン
+    private final static String DB_NAME  = "rokuon.db";  // DB名
+    private final static String DB_TABLE = "ROKUON_TBL"; // DBのテーブル名
+    private final static int DB_VERSION  = 1;            // DBのバージョン
 
     /**
      * DBのカラム名
      */
-    public final static String COL_ID       = "_id";      // id
-    public final static String COL_GID      = "group_id"; // グループID
-    public final static String COL_USER     = "user";     // ユーザー名
-    public final static String COL_ROKUON   = "rokuon";   // 録音
+    public final static String COL_ID      = "_id";      // id
+    public final static String COL_GID     = "gid";      // グループID
+    public final static String COL_USER    = "user";     // ユーザー名
+    public final static String COL_ROKUON  = "rokuon";   // 録音
 
     private SQLiteDatabase db = null; // SQLiteDatabase
     private DBHelper dbHelper = null; // DBHepler
@@ -39,6 +39,8 @@ public class DBAdapter {
      */
     public DBAdapter openDB() {
         db = dbHelper.getWritableDatabase();
+//        dbHelper.onDrop(db);
+        dbHelper.onCreate(db);
         return this;
     }
 
@@ -47,6 +49,15 @@ public class DBAdapter {
      */
     public void closeDB() {
         db.close();
+        db = null;
+    }
+
+    /**
+     * DB Drop
+     * ※検証中の削除用途
+     */
+    public void dropDB() {
+        dbHelper.onDrop(db);
         db = null;
     }
 
@@ -88,9 +99,9 @@ public class DBAdapter {
      */
     public Cursor getLatestRokuonGroup() {
 
-        String query = "SELECT orgin.content FROM "+ DB_TABLE +" orgin"
-                + " INNER JOIN (SELECT MAX(COL_GID) COL_GID FROM "+ DB_TABLE +") temp"
-                + " ON orgin.COL_GID = temp.COL_GID";
+        String query = "SELECT orgin."+ COL_ROKUON +" FROM "+ DB_TABLE +" orgin"
+                + " INNER JOIN (SELECT MAX("+ COL_GID +") " + COL_GID + " FROM "+ DB_TABLE +") temp"
+                + " ON orgin."+ COL_GID +" = temp.COL_GID";
 
         return db.rawQuery(query, null);
     }
@@ -102,7 +113,7 @@ public class DBAdapter {
      */
     public Cursor getMaxGroupID() {
 
-        String query = "SELECT MAX(COL_GID) COL_GID FROM " + DB_TABLE;
+        String query = "SELECT MAX("+ COL_GID +") "+ COL_GID +" FROM " + DB_TABLE;
 
         return db.rawQuery(query, null);
     }
@@ -131,7 +142,7 @@ public class DBAdapter {
         public void onCreate(SQLiteDatabase db) {
 
             //テーブルを作成するSQL文の定義 ※スペースに気を付ける
-            String createTbl = "CREATE TABLE " + DB_TABLE + " ("
+            String createTbl = "CREATE TABLE IF NOT EXISTS " + DB_TABLE + " ("
                     + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COL_GID + " INTEGER NOT NULL,"
                     + COL_USER + " TEXT NOT NULL,"
@@ -151,7 +162,7 @@ public class DBAdapter {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             // DBからテーブル削除
-            db.execSQL("DROP TABLE IF EXISTS" + DB_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + DB_TABLE);
             // テーブル生成
             onCreate(db);
         }
@@ -164,7 +175,7 @@ public class DBAdapter {
          */
         public void onDrop(SQLiteDatabase db) {
             // DBからテーブル削除
-            db.execSQL("DROP TABLE IF EXISTS" + DB_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + DB_TABLE);
         }
     }
 
